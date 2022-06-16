@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
+</head>
+<body>
+
+<h2>Search GitHub handle</h2>
+
+<input type="text" id="txt_name" placeholder="Search for names" title="Type in a name" required>
+
+           <button id="setText"> Search</button>
+
+        <div id="places"> </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+$("#setText").click(function(event) {
+    var txt_name = $('#txt_name').val();
+    //console.log(window.location.href);
+    $(document).ready(function() {
+         $.ajax({
+            type: "GET",
+            url: window.location.href+"api/repos/"+ txt_name,
+            contentType: 'application/json',
+            success: function(response) {
+                var parseval = JSON.parse(response);
+                
+                var str = "";
+                $("#places").empty();
+                if(parseval.response.length > 0){
+                
+                str += '<img src="'+ parseval.owner.image +'" alt="Trulli" width="100" height="100"><p>' + 
+                            '<b>Name</b> - <span class="location">' + parseval.owner.name + '</span></br>' +
+                            '<b>Followers</b> - <span class="location">' + parseval.owner.followers + '</span></br>'+
+                            '<b>Followings</b> - <span class="location">' + parseval.owner.following + '</span></br>' +
+                            '<b>Public Reposr</b> - <span class="location">' + parseval.owner.public_repos + '</span></br>' +
+                            '<b>Create at</b> - <span class="location">' + parseval.owner.created_at + '</span></br>' +
+                            '<b>Full Name</b> - <span class="location">' + parseval.owner.owner_fullname + '</span></br>'
+                            '</p>'
+                $.each(parseval.response, function(index, element) {
+                    
+                    str += '<p>' + '<b>Repo Name</b> - <span class="name">' + element.fullname + '</span></br>' +
+                            '<b>Description</b> - <span class="location">' + element.description + '</span></br>'+
+                            '<b>Rating</b> - <span class="location">' + element.rating + '</span></br>'+
+                            '<b>Repo Url</b> - <a href="'+ element.html_url +'"target="_blank">Click to open repo</a>' +
+                            '</p>'
+                });
+            } else {
+                str += "No repository found";
+            }
+                $('#places').append(str);
+                   //alert("success!");
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                    alert("Please enter handle name");
+            },
+        });
+    });
+});
+
+var input = document.getElementById("txt_name");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("setText").click();
+  }
+});
+    </script>
+
+</body>
+</html>
