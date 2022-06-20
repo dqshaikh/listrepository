@@ -40,6 +40,7 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 Open `.env` then edit it with your settings. You will need:
 
 - Change the db setting according to your mysql environment;
+- Change the git access token for fetching git api.
 
 ## Install
 
