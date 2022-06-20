@@ -21,5 +21,5 @@ db.sequelize = sequelize;
 
 db.owner = require("./gitmodel.js")(sequelize, Sequelize);
 db.repo = require("./repomodel.js")(sequelize, Sequelize);
-
+db.GIT_TOKEN = dbConfig.GIT_TOKEN;
 module.exports = db;

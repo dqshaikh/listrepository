@@ -44,9 +44,10 @@ app.get('/search', function(req, res) {
   res.render('index', { type: "main" });
 });
 
-app.get('/repo:name', function(req, res) {
+app.get('/repo', function(req, res) {
+  console.log(req.query.name);
   // UsersController.insert
-   res.render('index', { type: "repo" });
+   res.render('repo_list', { type: "repo" });
  });
 
 require("./app/routes/routes")(app);

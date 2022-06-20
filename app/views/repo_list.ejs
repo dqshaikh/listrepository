@@ -113,11 +113,6 @@ hr .new1 {
 <main>
   <div class="jumbotron">
    
-    <div class="d-flex flex-row justify-content-center align-items-center mt-3">
-<input type="text" id="txt_name" placeholder="Search repositories handle hear" title="Type in a name" required>
-
-<button id="setText"> Search</button>
-</div>
 
 <div id="places"> </div>
 
@@ -133,8 +128,10 @@ hr .new1 {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 
-  $("#setText").click(function(event) {
-      var txt_name = $('#txt_name').val();
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('name');
+
+      var txt_name = myParam;
       //console.log(window.location.href);
       $(document).ready(function() {
            $.ajax({
@@ -148,8 +145,14 @@ hr .new1 {
                   $("#places").empty();
                   if(parseval.response.length > 0){
                   
-                    str += '<div class="container mt-4 mb-4 p-3 d-flex justify-content-center"> <div class="card p-4"> <div class=" image d-flex flex-column justify-content-center align-items-center"> <button class="btn btn-secondary"> <img src="'+ parseval.owner.image +'" height="100" width="100" /></button> <span class="name mt-3">' + parseval.owner.name + '</span> <span class="idd">@' + parseval.owner.owner_fullname + '</span> <div class="d-flex flex-row justify-content-center align-items-center gap-2">  <span><i class="fa fa-copy"></i></span> </div> <div class="d-flex flex-row justify-content-center align-items-center mt-3"> <span class="number">' + parseval.owner.followers + ' <span class="follow">Followers</span></span> </div><div class="d-flex flex-row justify-content-center align-items-center mt-3"> <span class="number">' + parseval.owner.following + ' <span class="follow">Following</span></span> </div> <div class=" d-flex mt-2"> <a target="_blank" href="'+'repo?name=' + parseval.owner.name + '"><button class="btn1 btn-dark">View Repos</button></a> </div> <div class="text mt-3"> <span>Total public repos ' + parseval.owner.public_repos + '</span> </div> <div class="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><i class="fa fa-twitter"></i></span> <span><i class="fa fa-facebook-f"></i></span> <span><i class="fa fa-instagram"></i></span> <span><i class="fa fa-linkedin"></i></span> </div> <div class=" px-2 rounded mt-4 date "> <span class="join">Joined ' + parseval.owner.repo_created_at + '</span> </div> </div> </div></div>'
-
+                  $.each(parseval.response, function(index, element) {
+                      console.log(element);
+                      str += '<p>' + '<b>Repo Name</b> - <span class="name">' + element.repo_name + '</span></br>' +
+                              '<b>Description</b> - <span class="location">' + element.repo_description + '</span></br>'+
+                              '<b>Rating</b> - <span class="location">' + element.rating + '</span></br>'+
+                              '<b>Repo Url</b> - <a href="'+ element.url +'"target="_blank">Click to open repo</a>' +
+                              '</p>'
+                  });
               } else {
                   str += "No repository found";
               }
@@ -161,15 +164,8 @@ hr .new1 {
               },
           });
       });
-  });
   
-  var input = document.getElementById("txt_name");
-  input.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      document.getElementById("setText").click();
-    }
-  });
+  
       </script>
 
 </html>

@@ -1,6 +1,8 @@
 const db = require("../models");
+
 const Owner = db.owner;
 const Repo = db.repo;
+const git = db.GIT_TOKEN;
 const Op = db.Sequelize.Op;
 const axios = require('axios');
 
@@ -9,7 +11,7 @@ async function makeRequest(name) {
     try {
         var getheaders = {
             'Accept': 'application/vnd.github.v3+json',
-            'Authorization': 'token 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',
+            'Authorization': 'token '+git,
             'User-Agent': 'Fetch-api'
         
         };
@@ -41,7 +43,7 @@ async function makeRequestRepo(name,ownerid) {
     try {
         var getheaders = {
             'Accept': 'application/vnd.github.v3+json',
-            'Authorization': 'token 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',
+            'Authorization': 'token '+git,
             'User-Agent': 'Fetch-api'
         
         };
