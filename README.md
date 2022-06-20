@@ -35,16 +35,11 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 
     $ npm install npm -g
 
-## Database
-
-Upload `git_db.sql` in mysql database:
-
 ## Configure app
 
-Open `app.js` then edit it with your settings. You will need:
+Open `.env` then edit it with your settings. You will need:
 
-- Open app.js file;
-- on line number 16-19 change the db setting according to your mysql environment;
+- Change the db setting according to your mysql environment;
 
 ## Install
 
